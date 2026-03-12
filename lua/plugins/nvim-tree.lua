@@ -9,11 +9,30 @@ return {
     local function on_attach(bufnr)
       local api = require("nvim-tree.api")
 
+      local function opts(desc)
+        return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+      end
+
+      -- 1. まずはデフォルト設定を読み込む
       api.config.mappings.default_on_attach(bufnr)
 
-      -- "s" is mapped to system_open by default; remap to move up.
-      vim.keymap.del("n", "s", { buffer = bufnr })
-      vim.keymap.set("n", "s", "k", { buffer = bufnr, noremap = true, silent = true })
+      -- 2. 【安全な削除】pcall を使って、エラーが出ても無視するようにする
+      local function safe_del(key)
+        pcall(vim.keymap.del, "n", key, { buffer = bufnr })
+      end
+
+      safe_del("s")
+      safe_del("n")
+      safe_del("t")
+      safe_del("h")
+
+      -- 3. 大西配列の「tnsh」を上書き設定
+      vim.keymap.set("n", "n", "k", opts("Up"))   -- n = 上
+      vim.keymap.set("n", "s", "j", opts("Down")) -- s = 下
+
+      -- t=左（閉じる）, h=右（開く）
+      vim.keymap.set("n", "t", api.node.navigate.parent_close, opts("Close Directory"))
+      vim.keymap.set("n", "h", api.node.open.edit,            opts("Open"))
     end
 
     require("nvim-tree").setup({

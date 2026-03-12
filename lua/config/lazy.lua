@@ -30,8 +30,8 @@ keymap('i', 'ii', '<Esc>', opts)
 
 -- 2. tnsh で hjkl 移動 (右手ホーム)
 keymap('n', 't', 'h', opts) -- 左
-keymap('n', 'n', 'j', opts) -- 下
-keymap('n', 's', 'k', opts) -- 上
+keymap('n', 'n', 'k', opts) -- 上
+keymap('n', 's', 'j', opts) -- 下
 keymap('n', 'h', 'l', opts) -- 右
 
 -- 3. 機能を逃がす (k, j, l)
@@ -40,10 +40,10 @@ keymap('n', 'j', 'n', opts) -- next (検索)
 keymap('n', 'l', 's', opts) -- substitute
 
 -- 4. 視覚モードでも移動を共通化
-keymap('v', 't', 'h', opts)
-keymap('v', 'n', 'j', opts)
-keymap('v', 's', 'k', opts)
-keymap('v', 'h', 'l', opts)
+keymap('v', 't', 'h', opts) -- 左
+keymap('v', 'n', 'k', opts) -- 上
+keymap('v', 's', 'j', opts) -- 下
+keymap('v', 'h', 'l', opts) -- 右
 
 -- 【表示・検索系】
 vim.opt.ignorecase = true  -- 検索時に大文字小文字を区別しない
@@ -56,7 +56,7 @@ vim.opt.guicursor = "n-i:ver25" -- ノーマルモードでのカーソルを補
 -- 【編集系】
 vim.opt.expandtab = true   -- タブ入力を空白に変換
 vim.opt.shiftwidth = 4     -- 自動インデントの幅
-vim.opt.tabstop = 1        -- タブが占める幅
+vim.opt.tabstop = 4        -- タブが占める幅
 vim.opt.smartindent = true -- 改行時に自動でインデントを入れる
 vim.opt.clipboard = "unnamedplus" -- クリップボードをOS（Mac/Ubuntu）と共有
 -- ビジュアルモード（選択中）で Tab を押すと右へ、S-Tab で左へ（選択範囲を維持）
