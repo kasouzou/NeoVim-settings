@@ -5,7 +5,7 @@ return {
   config = function()
     require("nvim-treesitter.configs").setup({
       -- Install parsers for common languages
-      ensure_installed = { "lua", "vim", "vimdoc", "javascript", "typescript", "python", "html", "css", "json", "bash", "dart" },
+      ensure_installed = { "lua", "vim", "vimdoc", "javascript", "typescript", "python", "html", "css", "json", "bash", "dart", "kotlin" },
       sync_install = false,
       auto_install = true,
       highlight = {

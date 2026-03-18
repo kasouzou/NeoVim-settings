@@ -12,7 +12,7 @@ return {
     config = function()
       require("mason-lspconfig").setup({
         -- Add LSPs you want here (e.g., tsserver, pyright)
-        ensure_installed = { "lua_ls" },
+        ensure_installed = { "lua_ls", "html", "cssls", "tsserver", "jsonls", "kotlin_language_server", "gradle_ls" },
       })
     end,
   },
@@ -20,19 +20,32 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       local lspconfig = require("lspconfig")
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
       -- Basic keymaps for LSP
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
       vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
 
-      -- Setup lua_ls as an example
-      lspconfig.lua_ls.setup({
-        settings = {
-          Lua = {
-            diagnostics = { globals = { "vim" } },
+      local servers = {
+        lua_ls = {
+          settings = {
+            Lua = {
+              diagnostics = { globals = { "vim" } },
+            },
           },
         },
-      })
+        html = {},
+        cssls = {},
+        tsserver = {},
+        jsonls = {},
+        kotlin_language_server = {},
+        gradle_ls = {},
+      }
+
+      for server, config in pairs(servers) do
+        config.capabilities = capabilities
+        lspconfig[server].setup(config)
+      end
     end,
   },
   -- Completion engine
@@ -44,9 +57,11 @@ return {
       "hrsh7th/cmp-path",
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
+      "rafamadriz/friendly-snippets",
     },
     config = function()
       local cmp = require("cmp")
+      require("luasnip.loaders.from_vscode").lazy_load()
       cmp.setup({
         snippet = {
           expand = function(args)
