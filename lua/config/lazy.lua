@@ -21,29 +21,13 @@ vim.opt.termguicolors = true -- フルカラーを有効にする
 vim.opt.number = true        -- 行番号を表示
 vim.opt.cursorline = true    -- 現在行をハイライト
 
--- 【大西配列・Esc対策マッピング】
+-- 【キーマップ共通設定】
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- 1. ii で Esc (左手ホーム)
-keymap('i', 'ii', '<Esc>', opts)
-
--- 2. tnsh で hjkl 移動 (右手ホーム)
-keymap('n', 't', 'h', opts) -- 左
-keymap('n', 'n', 'k', opts) -- 上
-keymap('n', 's', 'j', opts) -- 下
-keymap('n', 'h', 'l', opts) -- 右
-
--- 3. 機能を逃がす (k, j, l)
-keymap('n', 'k', 't', opts) -- till
-keymap('n', 'j', 'n', opts) -- next (検索)
-keymap('n', 'l', 's', opts) -- substitute
-
--- 4. 視覚モードでも移動を共通化
-keymap('v', 't', 'h', opts) -- 左
-keymap('v', 'n', 'k', opts) -- 上
-keymap('v', 's', 'j', opts) -- 下
-keymap('v', 'h', 'l', opts) -- 右
+-- 【Esc対策マッピング】
+-- QWERTY配列の右手ホームポジションで最もスムーズに抜けられる設定っす！
+keymap('i', 'jj', '<Esc>', opts)
 
 -- 【表示・検索系】
 vim.opt.ignorecase = true       -- 検索時に大文字小文字を区別しない

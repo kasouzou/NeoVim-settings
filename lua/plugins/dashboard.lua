@@ -7,6 +7,7 @@ return {
             '#89ddff', -- Cyan
             '#82aaff', -- Light Blue
             '#bb80ff', -- Purple
+
             '#f07178', -- Red/Pink
             '#ffcb6b', -- Orange
             '#c3e88d', -- Green
