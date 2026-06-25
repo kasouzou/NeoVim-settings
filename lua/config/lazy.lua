@@ -30,12 +30,12 @@ local opts = { noremap = true, silent = true }
 keymap('i', 'jj', '<Esc>', opts)
 
 -- 【表示・検索系】
-vim.opt.ignorecase = true       -- 検索時に大文字小文字を区別しない
-vim.opt.smartcase = true        -- 検索文字に大文字が含まれていたら区別する
-vim.opt.incsearch = true        -- 検索文字を入力してるそばからヒットさせる
-vim.opt.wrapscan = true         -- ファイルの最後まで検索したら最初に戻る
-vim.opt.hlsearch = true         -- 検索結果をハイライトする（消したい時は :noh）
-vim.opt.guicursor = "n-i:ver25" -- ノーマルモードでのカーソルを補足して文字のどちら側にいるのかわかるようにする。
+vim.opt.ignorecase = true -- 検索時に大文字小文字を区別しない
+vim.opt.smartcase = true  -- 検索文字に大文字が含まれていたら区別する
+vim.opt.incsearch = true  -- 検索文字を入力してるそばからヒットさせる
+vim.opt.wrapscan = true   -- ファイルの最後まで検索したら最初に戻る
+vim.opt.hlsearch = true   -- 検索結果をハイライトする（消したい時は :noh）
+-- vim.opt.guicursor = "n-i:ver25" -- ノーマルモードでのカーソルを補足して文字のどちら側にいるのかわかるようにする。
 
 -- 【編集系】
 vim.opt.expandtab = true          -- タブ入力を空白に変換
