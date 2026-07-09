@@ -17,9 +17,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- 【基本設定】
-vim.opt.termguicolors = true -- フルカラーを有効にする
-vim.opt.number = true        -- 行番号を表示
-vim.opt.cursorline = true    -- 現在行をハイライト
+vim.opt.termguicolors = true  -- フルカラーを有効にする
+vim.opt.number = true         -- 行番号を表示
+vim.opt.relativenumber = true -- 現在行からの相対的な番号を表示
+vim.opt.cursorline = true     -- 現在行をハイライト
 
 -- 【キーマップ共通設定】
 local keymap = vim.keymap.set
