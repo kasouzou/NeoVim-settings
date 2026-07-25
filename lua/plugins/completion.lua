@@ -6,7 +6,7 @@ return {
 
     opts = {
         -- キーマッピングの設定 (TabやEnter、矢印キーで直感的に操作できます)
-        keymap = { preset = 'default' },
+        keymap = { preset = 'enter' },
 
         -- 補完のソース（出処）に LSP（kotlin_language_server等）を指定
         sources = {

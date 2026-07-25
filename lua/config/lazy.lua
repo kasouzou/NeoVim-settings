@@ -66,3 +66,61 @@ vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "Terminal", { bg = "NONE" })
+
+
+-- 【VS Code風ファイルタブ切り替え】
+keymap('n', '<S-h>', ':bprevious<CR>', opts) -- 左のファイルタブへ移動
+keymap('n', '<S-l>', ':bnext<CR>', opts)     -- 右のファイルタブへ移動
+keymap('n', 'tc', function()
+    local current_buf = vim.api.nvim_get_current_buf()
+
+    -- NvimTreeの上で誤爆したときは何もしないガードっす
+    if vim.bo[current_buf].filetype == "NvimTree" then
+        return
+    end
+
+    local buffers = vim.fn.getbufinfo({ buflisted = 1 })
+    if #buffers <= 1 then
+        vim.cmd("enew")
+        vim.cmd("bd " .. current_buf)
+    else
+        vim.cmd("bnext")
+        vim.cmd("bd " .. current_buf)
+    end
+end, opts) -- 現在のファイルタブを閉じる
+
+----------------------------------------------------
+-- 【NEW】ファイルタブの並び順を入れ替える設定っす！
+----------------------------------------------------
+-- Alt + h で、今見ているタブを「左」に移動させるっす
+keymap('n', '<A-h>', ':BufferLineMovePrev<CR>', opts)
+-- Alt + l で、今見ているタブを「右」に移動させるっす
+keymap('n', '<A-l>', ':BufferLineMoveNext<CR>', opts)
+
+-- テキスト変更時やインサートモードを抜けた時に自動保存
+
+-- 【自動保存 ＆ LilyPondコンパイルの一体化設定】
+-- LilyPondは楽譜を書くためのフリーソフトです
+vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
+    pattern = "*",
+    callback = function()
+        -- 1. 変更があり、かつ通常のファイルバッファの場合のみ保存を実行
+        if vim.bo.modified and vim.bo.buftype == "" then
+            vim.cmd("write")
+
+            -- 2. もし保存したファイルがLilyPond(.ly)だった場合、その直後に非同期コンパイルを実行
+            if vim.fn.expand("%:e") == "ly" then
+                local file = vim.fn.expand("%")
+                vim.fn.jobstart({ "lilypond", file }, {
+                    on_exit = function(_, code)
+                        if code == 0 then
+                            vim.notify("LilyPond: コンパイル成功！", vim.log.levels.INFO)
+                        else
+                            vim.notify("LilyPond: エラーが発生しました", vim.log.levels.WARN)
+                        end
+                    end
+                })
+            end
+        end
+    end,
+})

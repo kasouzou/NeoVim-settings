@@ -13,7 +13,7 @@ return {
         -- ※ sourcekit-lsp はツールチェーン付属のものを使うため、Masonの自動インストールには含めないっす！
         require("mason").setup()
         require("mason-lspconfig").setup({
-            ensure_installed = { "kotlin_language_server", "lua_ls" },
+            ensure_installed = { "kotlin_language_server", "lua_ls", "html", "cssls", "ts_ls" },
         })
 
         -- 2. キーマッピング（共通の接続時処理）
@@ -36,6 +36,9 @@ return {
                 map("n", "<leader>D", vim.lsp.buf.type_definition, opts "Go to type definition")
                 map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts "Code action")
                 map("n", "gr", vim.lsp.buf.references, opts "Show references")
+
+                -- 【追加】Eと書かれた行のエラー詳細をポップアップ表示する設定っす！
+                map("n", "gl", vim.diagnostic.open_float, opts "Show line diagnostics")
             end,
         })
 
@@ -129,7 +132,7 @@ return {
         })
 
         -- 使用する言語サーバーの一覧（lua_ls も再度戻しておきます。ここに sourcekit を追加っす！）
-        local servers = { "lua_ls", "kotlin_language_server", "sourcekit" }
+        local servers = { "lua_ls", "kotlin_language_server", "sourcekit", "html", "cssls", "ts_ls" }
 
         -- 一括で有効化
         for _, lsp in ipairs(servers) do
